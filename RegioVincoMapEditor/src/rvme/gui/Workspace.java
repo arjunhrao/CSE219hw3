@@ -7,6 +7,7 @@ package rvme.gui;
 
 import javafx.event.EventType;
 import javafx.scene.Group;
+import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Background;
@@ -34,12 +35,21 @@ public class Workspace extends AppWorkspaceComponent {
     Boolean hasLines;
     int counter = 0;
     
+    //HW4
+    SplitPane splitPane = new SplitPane();
+    FlowPane editToolbar = new FlowPane();
+    
     public Workspace(MapEditorApp initApp) {
         app = initApp;
         workspace = new Pane();
+        
+        initHW4Layout();
+        
         xOrigin = app.getGUI().getPrimaryScene().getWidth()/2;
         yOrigin = (app.getGUI().getPrimaryScene().getHeight()-60)/2;
-        removeButtons();
+        
+        //dont want this here since HW4
+        //removeButtons();
         hasLines = false;
         
         //create controller
@@ -48,6 +58,18 @@ public class Workspace extends AppWorkspaceComponent {
         //initialize processing of eventhandlers - create new method
         processEvents();
     }
+    
+    public void initHW4Layout() {
+        FlowPane fp = (FlowPane)app.getGUI().getAppPane().getTop();
+        
+        //give the edit toolbar the appropriate controls
+        newButton = initChildButton(fileToolbarPane,	NEW_ICON.toString(),	    NEW_TOOLTIP.toString(),	false);
+        app.getGUI().initChildButton(workspace, CLASS_FILE_BUTTON, CLASS_FILE_BUTTON, true)
+        
+        //now add the toolbar to the flowpane
+        fp.getChildren().addAll(editToolbar);
+    }
+    
     
     public MapController getMapController() {return mapController;}
     
