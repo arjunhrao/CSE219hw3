@@ -20,6 +20,12 @@
 	<property name="WIDTH_PROMPT_LABEL"	    value="Width: "></property>
 	<property name="HEIGHT_PROMPT_LABEL"        value="Height: "></property>
 
+	<!-- EDIT SUBREGION DIALOG STUFF -->
+	<property name="EDIT_SUBREGION_HEADING"	    value="Edit Subregion"></property>	
+	<property name="SUBREGION_NAME_PROMPT_LABEL"	    value="Subregion Name:"></property>
+	<property name="CAPITAL_PROMPT_LABEL"	    value="Capital: "></property>
+	<property name="LEADER_PROMPT_LABEL"        value="Leader: "></property>
+
 	<!-- TABLE STUFF -->
 	<property name="SUBREGIONNAME_COLUMN_HEADING"	    value="Subregion Name"></property>
 	<property name="CAPITAL_COLUMN_HEADING"	    value="Capital"></property>

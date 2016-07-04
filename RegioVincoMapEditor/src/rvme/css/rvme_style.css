@@ -34,3 +34,13 @@
 .height_prompt_label {
     -fx-font-size: 10pt;
 }
+
+.subregion_name_prompt_label {
+    -fx-font-size: 10pt;
+}
+.capital_prompt_label {
+    -fx-font-size: 10pt;
+}
+.leader_prompt_label {
+    -fx-font-size: 10pt;
+}

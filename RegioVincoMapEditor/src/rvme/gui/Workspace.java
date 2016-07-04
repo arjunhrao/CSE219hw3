@@ -199,7 +199,11 @@ public class Workspace extends AppWorkspaceComponent {
                 SubRegion it = subregionsTable.getSelectionModel().getSelectedItem();
                 mapController.processEditSubregion(it);
             }
-        }
+        });
+        //app.getGUI().getNewButton().setOnAction(e -> {
+            //mapController.processNewRequest();
+        //});
+        
     }
     
     public void processEvents() {
@@ -241,18 +245,20 @@ public class Workspace extends AppWorkspaceComponent {
         
     }
     
+    @Override
+    public void newDialog() {
+        mapController.processNewMapDialog();
+    }
     
     @Override
     public void reloadWorkspace() {
         
         DataManager dataManager = (DataManager)app.getDataComponent();
         //clears the workspace
-        workspace.getChildren().clear();
+        //workspace.getChildren().clear();
         
         //set the background to be lightblue
-        workspace.setStyle("-fx-background-color: lightblue;");
-        //app.getWorkspaceComponent().getWorkspace().
-        //.setBackground(new Background("#F0F8FF"));
+        //workspace.setStyle("-fx-background-color: lightblue;");
            
         //fill polygons with green
         dataManager.fillPolygons(Paint.valueOf("#556B2F"));
@@ -268,13 +274,13 @@ public class Workspace extends AppWorkspaceComponent {
         
         //renderPane.setScaleX(4);
         //renderPane.setScaleY(4);
-        renderPane.setStyle("-fx-background-color: lightblue;");
+        //renderPane.setStyle("-fx-background-color: lightblue;");
         
         //adds the lines if hasLines = true; else, removes the lines.
         addLines(hasLines);
         
         
-        workspace.getChildren().addAll(renderPane);
+        //workspace.getChildren().addAll(renderPane);
         
         //clip it to avoid overflow
         Rectangle clip = new Rectangle();
@@ -282,7 +288,14 @@ public class Workspace extends AppWorkspaceComponent {
         clip.setWidth(app.getGUI().getPrimaryScene().getWidth());
         clip.setLayoutX(0);
         clip.setLayoutY(0);
-        workspace.setClip(clip);
+        //workspace.setClip(clip);
+        
+        //hw4
+        workspace.getChildren().clear();
+        //splitPane.getItems().clear();
+        editToolbar.getChildren().clear();
+        initHW4Layout();
+        
         
         
     }

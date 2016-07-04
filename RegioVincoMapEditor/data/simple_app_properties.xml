@@ -30,7 +30,9 @@
         <property name="CHANGE_MAP_DIMENSIONS"	 	   value="Resize.png"></property>
         <property name="PLAY_ANTHEM"	    		value="Play.png"></property>
 	<property name="PAUSE_ANTHEM"	    		value="Pause.png"></property>
-	
+        <property name="NEXT_BUTTON"	    		value="Next.png"></property>
+	<property name="PREV_BUTTON"	    		value="Prev.png"></property>	
+
 	<!-- EDIT TOOLBAR BUTTONS TOOLTIPS -->
         <property name="RENAME_MAP_TT"	  		  value="Rename Map"></property>
         <property name="ADD_IMAGE_TT"	   		 value="Add Image"></property>
@@ -41,6 +43,8 @@
         <property name="CHANGE_MAP_DIMENSIONS_TT"	 	   value="Change Map Dimensions"></property>
         <property name="PLAY_ANTHEM_TT"	    		value="Play Region Anthem"></property>
 	<property name="PAUSE_ANTHEM_TT"	    		value="Pause Region Anthem"></property>
+        <property name="NEXT_BUTTON_TT"	    		value="Go To Next Subregion"></property>
+        <property name="PREV_BUTTON_TT"	    		value="Go To Previous Subregion"></property>
 	
         <!-- TOOLTIPS FOR BUTTONS -->
         <property name="NEW_TOOLTIP"		value="Create New Map"></property>
