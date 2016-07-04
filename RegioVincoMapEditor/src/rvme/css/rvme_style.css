@@ -27,3 +27,10 @@
     -fx-font-size: 14pt;
     -fx-font-weight: bold;
 }
+
+.width_prompt_label {
+    -fx-font-size: 10pt;
+}
+.height_prompt_label {
+    -fx-font-size: 10pt;
+}

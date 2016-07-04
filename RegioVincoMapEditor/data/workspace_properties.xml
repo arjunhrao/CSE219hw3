@@ -15,6 +15,11 @@
 	<property name="UPDATE_ERROR_MESSAGE"		    value="An error occured updating the UI"></property>
 	<property name="UPDATE_ERROR_TITLE"		    value="UI Update Error"></property>
 
+	<!-- DIMENSIONS DIALOG STUFF -->
+	<property name="DIMENSIONS_HEADING"	    value="Dimensions"></property>
+	<property name="WIDTH_PROMPT_LABEL"	    value="Width: "></property>
+	<property name="HEIGHT_PROMPT_LABEL"        value="Height: "></property>
+
 	<!-- TABLE STUFF -->
 	<property name="SUBREGIONNAME_COLUMN_HEADING"	    value="Subregion Name"></property>
 	<property name="CAPITAL_COLUMN_HEADING"	    value="Capital"></property>

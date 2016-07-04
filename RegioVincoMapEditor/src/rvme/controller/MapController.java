@@ -22,8 +22,10 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Scale;
 import static javafx.scene.transform.Transform.scale;
 import properties_manager.PropertiesManager;
+import static rvme.PropertyType.*;
 import saf.AppTemplate;
 import rvme.data.DataManager;
+import rvme.data.SubRegion;
 import rvme.gui.Workspace;
 
 /**
@@ -253,30 +255,18 @@ public class MapController {
 
     //hw4
     public void processMapDimensions() {
-        Workspace workspace = (Workspace)app.getWorkspaceComponent();
-        
+        // ENABLE/DISABLE THE PROPER BUTTONS
+	Workspace workspace = (Workspace)app.getWorkspaceComponent();
+	workspace.reloadWorkspace();
         myManager=(DataManager)app.getDataComponent();
         
-        
-        int x = myManager.getItems().indexOf(it);
-        
-        //Workspace workspace = (Workspace)app.getWorkspaceComponent();
-	workspace.reloadWorkspace();
-        
-        
-        //need a popup dialogue box with multiple input fields for all of the todoitem's data
-        
+        //need a popup dialogue box with multiple input fields for all of the necessary data
         //the following line is included so that we can use things from the xml files
         PropertiesManager props = PropertiesManager.getPropertiesManager();
-
-        
-        //creates a stage for the dialog
-        //Stage myStage = new Stage();
         
         //creates the dialog
         Dialog<ButtonType> dialog = new Dialog<>();
-        //dialog.initStyle(StageStyle.TRANSPARENT);
-        dialog.setTitle(props.getProperty(EDIT_ITEM_HEADING));
+        dialog.setTitle(props.getProperty(DIMENSIONS_HEADING));
         
         //adds ok and cancel buttons
         ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
@@ -288,68 +278,99 @@ public class MapController {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20, 150, 10, 10));
         
-        TextField category = new TextField();
-        //IMPORTANT: this actually puts the relevant information inside
-        if (it.getCategory() != null) {
-            category.setText(it.getCategory());
-        } else {
-            category.setText("");
-        }
+        TextField width = new TextField();
         //Note: the next two commented lines of code set the prompty text, which is nice but unnecessary
         //category.setPromptText(props.getProperty(CATEGORY_PROMPT));
-        TextField description = new TextField();
-        //IMPORTANT: this actually puts the relevant information inside
-        if (it.getDescription() != null) {
-            description.setText(it.getDescription());
-        } else {
-            category.setText("");
-        }
+        TextField height = new TextField();
         //description.setPromptText("Description");
 
-        //HBox HBox1 = new HBox();
+        Label widthLabel = new Label(props.getProperty(WIDTH_PROMPT_LABEL));
+        Label heightLabel = new Label(props.getProperty(HEIGHT_PROMPT_LABEL));
+        addSheetsToLabel(widthLabel, "width_prompt_label");
+        addSheetsToLabel(heightLabel, "height_prompt_label");
+        
+        SubRegion mySubRegion = new SubRegion();
+        
+        gridPane.add(widthLabel, 0, 0);
+        gridPane.add(width, 1, 0);
+        gridPane.add(heightLabel, 0, 1);
+        gridPane.add(height, 1, 1);
+        
+        dialog.getDialogPane().setContent(gridPane);
+        Optional<ButtonType> result = dialog.showAndWait();
+        
+        if (result.isPresent() && result.get() == okButtonType) {
+            //set and save the data to myItem and add it to the arraylist in the datamanager obj myManager
+            //use mysubregion? check the other controller
+            
+            //enable the save button
+            //HW4: app.getGUI().getSaveButton().setDisable(false);
+            
+            changesMade();
+            //update the workspace / table
+            workspace.reloadWorkspace();
+            //useless line of code: app.getWorkspaceComponent().getWorkspace().getChildren().clear();
+        }
+    }
+        
+    public void changesMade() {
+        //changes the value of saved in the AppFileController to show that the list
+        //has been edited and has not been saved so that exiting will make sure to ask before just exiting.
+        app.getGUI().getFileController().setSaved(false);
+    }
+    
+    public void addSheetsToLabel(Label o, String cssHeading) {
+        o.getStylesheets().addAll(app.getGUI().getPrimaryScene().getStylesheets());
+        o.getStyleClass().add(cssHeading);
+    }
 
-        ToDoItem myItem = new ToDoItem();
-        Label catprompt = new Label();
-        //catprompt.setFont(Font.font("Cambria", 32));
-        //catprompt.setTextFill(Color.web("#0076a3"));
-        //this line clearly works... because setting the text of the label to this .path() works and compiles
-        this.getClass().getClassLoader().getResource("tdlm/css/tdlm_style.css");
+    public void processEditSubregion(SubRegion it) {
         
         
-        //after like 5 hours I still can't figure out why the style won't change... :(
+        // ENABLE/DISABLE THE PROPER BUTTONS
+	Workspace workspace = (Workspace)app.getWorkspaceComponent();
+	workspace.reloadWorkspace();
+        myManager=(DataManager)app.getDataComponent();
         
-        //catprompt.getStyleClass().add("category_prompt_label");
-        //String stylesheet = props.getProperty(APP_PATH_CSS);
-	//stylesheet += props.getProperty(APP_CSS);
-	//URL stylesheetURL = app.getClass().getResource(stylesheet);
-	//String stylesheetPath = stylesheetURL.toExternalForm();
-	//app.getGUI().getPrimaryScene().getStylesheets().add(stylesheetPath);
+        //need a popup dialogue box with multiple input fields for all of the necessary data
+        //the following line is included so that we can use things from the xml files
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
         
-        //the next line is how the stylesheet is actually added. This was shown to me by Kevin after
-        //the deadline - I should've asked about it but I thought I had time to figure it out.
-        //I couldn't though, so I didn't get credit for this :/
-        // This would have to be done for each label.
-        catprompt.getStylesheets().addAll(app.getGUI().getPrimaryScene().getStylesheets());
-        catprompt.getStyleClass().add("category_prompt_label");
+        //creates the dialog
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle(props.getProperty(DIMENSIONS_HEADING));
         
-        catprompt.setText(props.getProperty(CATEGORY_PROMPT));
-        //catprompt.getStyleClass().add("prompt_label");
-        //catprompt.setText(this.getClass().getClassLoader().getResource("tdlm/css/tdlm_style.css").getPath());
+        //adds ok and cancel buttons
+        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
         
-        //gridPane.getStyleClass().add("prompt_label");
+        //start creating the boxes/panes for the gui
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(20, 150, 10, 10));
         
-        gridPane.add(catprompt, 0, 0);
-        gridPane.add(category, 1, 0);
-        gridPane.add(new Label(props.getProperty(DESCRIPTION_PROMPT)), 0, 1);
-        gridPane.add(description, 1, 1);
+        TextField width = new TextField();
+        //Note: the next two commented lines of code set the prompty text, which is nice but unnecessary
+        //category.setPromptText(props.getProperty(CATEGORY_PROMPT));
+        TextField height = new TextField();
+        //description.setPromptText("Description");
 
-        DatePicker startDate = new DatePicker();
-        DatePicker endDate = new DatePicker();
-        startDate.setValue(myItem.getStartDate());
-        endDate.setValue(myItem.getEndDate());
-        //IMPORTANT: this actually puts the relevant information inside
-        startDate.setValue(it.getStartDate());
-        //IMPORTANT: this actually puts the relevant information inside
+        Label widthLabel = new Label(props.getProperty(WIDTH_PROMPT_LABEL));
+        Label heightLabel = new Label(props.getProperty(HEIGHT_PROMPT_LABEL));
+        addSheetsToLabel(widthLabel, "width_prompt_label");
+        addSheetsToLabel(heightLabel, "height_prompt_label");
+        
+        
+        
+        SubRegion mySubRegion = new SubRegion();
+        
+        gridPane.add(widthLabel, 0, 0);
+        gridPane.add(width, 1, 0);
+        gridPane.add(heightLabel, 0, 1);
+        gridPane.add(height, 1, 1);
+        
+        
         endDate.setValue(it.getEndDate());
         
         gridPane.add(new Label(props.getProperty(STARTDATE_PROMPT)), 0, 2);
@@ -357,49 +378,24 @@ public class MapController {
 
         gridPane.add(new Label(props.getProperty(ENDDATE_PROMPT)), 0, 3);
         gridPane.add(endDate, 1, 3);
-
-        CheckBox completed = new CheckBox();
-        //IMPORTANT: this actually puts the relevant information inside
-        completed.setSelected(it.getCompleted());
-        //do i need to make sure that it can't be in the indeterminate state?
         
-        gridPane.add(new Label(props.getProperty(COMPLETED_PROMPT)), 0, 4);
-        gridPane.add(completed, 1, 4);
-       
-        //catprompt.setStyle("category_prompt_label");
-        //gridPane.setStyle("category_prompt_label");
         
         dialog.getDialogPane().setContent(gridPane);
         Optional<ButtonType> result = dialog.showAndWait();
         
-        
-
         if (result.isPresent() && result.get() == okButtonType) {
             //set and save the data to myItem and add it to the arraylist in the datamanager obj myManager
-            myManager.getItems().get(x).setCategory(category.getText());
-            myManager.getItems().get(x).setDescription(description.getText());
-            myManager.getItems().get(x).setStartDate(startDate.getValue());
-            myManager.getItems().get(x).setEndDate(endDate.getValue());
-            myManager.getItems().get(x).setCompleted(completed.isSelected());
-            
+            //use mysubregion? check the other controller
             
             //enable the save button
-            app.getGUI().getSaveButton().setDisable(false);
+            //HW4: app.getGUI().getSaveButton().setDisable(false);
             
-            //update the workspace / table / savestate
             changesMade();
+            //update the workspace / table
             workspace.reloadWorkspace();
             //useless line of code: app.getWorkspaceComponent().getWorkspace().getChildren().clear();
         }
-    }
-        
-        public void changesMade() {
-        //changes the value of saved in the AppFileController to show that the list
-        //has been edited and has not been saved so that exiting will make sure to ask before just exiting.
-        app.getGUI().getFileController().setSaved(false);
-        }
         
     }
-    
     
 }

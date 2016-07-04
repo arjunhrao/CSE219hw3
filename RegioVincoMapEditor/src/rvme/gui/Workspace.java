@@ -190,8 +190,16 @@ public class Workspace extends AppWorkspaceComponent {
     public void processHW4Events() {
         changeMapDimensionsButton.setOnAction(e -> {
             //pop up a dimensions dialog
+            mapController.processMapDimensions();
         });
-        
+        subregionsTable.setOnMouseClicked(e -> {
+           
+                
+            if (e.getClickCount() == 2) {
+                SubRegion it = subregionsTable.getSelectionModel().getSelectedItem();
+                mapController.processEditSubregion(it);
+            }
+        }
     }
     
     public void processEvents() {
