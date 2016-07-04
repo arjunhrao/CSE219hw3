@@ -1,6 +1,7 @@
 package rvme.data;
 
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
@@ -15,6 +16,8 @@ import rvme.gui.Workspace;
 public class DataManager implements AppDataComponent {
     MapEditorApp app;
     ArrayList<Polygon> polygonList = new ArrayList<>();
+    //hw4
+    ObservableList<SubRegion> subregions;
     
     public DataManager(MapEditorApp initApp) {
         app = initApp;
@@ -100,4 +103,8 @@ public class DataManager implements AppDataComponent {
 
     }
     
+    
+    public ObservableList<SubRegion> getSubregions() {
+	return subregions;
+    }
 }
