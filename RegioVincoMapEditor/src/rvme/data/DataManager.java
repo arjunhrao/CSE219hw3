@@ -1,6 +1,8 @@
 package rvme.data;
 
 import java.util.ArrayList;
+import java.util.List;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -21,6 +23,8 @@ public class DataManager implements AppDataComponent {
     
     public DataManager(MapEditorApp initApp) {
         app = initApp;
+        List list = new ArrayList();
+        subregions = FXCollections.observableList(list);
     }
     
     @Override

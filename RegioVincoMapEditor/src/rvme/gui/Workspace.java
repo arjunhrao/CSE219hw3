@@ -6,20 +6,24 @@
 package rvme.gui;
 
 import java.time.LocalDate;
+import javafx.collections.ObservableList;
 import javafx.event.EventType;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
@@ -51,14 +55,25 @@ public class Workspace extends AppWorkspaceComponent {
     //HW4
     SplitPane splitPane = new SplitPane();
     FlowPane editToolbar = new FlowPane();
+    Pane mapPane = new Pane();
     TableView<SubRegion> subregionsTable;
     TableColumn subregionNameColumn;
     TableColumn capitalNameColumn;
     TableColumn leaderNameColumn;
+    Button renameMapButton;
+    Button addImageButton;
+    Button removeImageButton;
+    Button changeBackgroundColorButton;
+    Button changeBorderColorButton;
+    Button randomizeMapColorsButton;
+    Button changeMapDimensionsButton;
+    Button playAnthemButton;
+    Button pauseAnthemButton;
     
     public Workspace(MapEditorApp initApp) {
         app = initApp;
         workspace = new Pane();
+        app.getGUI().getAppPane().setCenter(splitPane);
         
         initHW4Layout();
         
@@ -74,9 +89,12 @@ public class Workspace extends AppWorkspaceComponent {
         
         //initialize processing of eventhandlers - create new method
         processEvents();
+        processHW4Events();
     }
     
     public void initHW4Layout() {
+        workspace.getStyleClass().add(CLASS_BORDERED_PANE);
+        
         FlowPane fp = (FlowPane)app.getGUI().getAppPane().getTop();
         
         //give the edit toolbar the right style
@@ -84,14 +102,15 @@ public class Workspace extends AppWorkspaceComponent {
         //give the edit toolbar the appropriate controls
         //newButton = initChildButton(fileToolbarPane,	NEW_ICON.toString(),	    NEW_TOOLTIP.toString(),	false);
         //ADDING BUTTONS
-        app.getGUI().initChildButton(editToolbar, RENAME_MAP.toString(), RENAME_MAP_TT.toString(), false);
-        app.getGUI().initChildButton(editToolbar, ADD_IMAGE.toString(), ADD_IMAGE_TT.toString(), false);
-        app.getGUI().initChildButton(editToolbar, REMOVE.toString(), REMOVE_TT.toString(), false);
-        app.getGUI().initChildButton(editToolbar, CHANGE_BACKGROUND_COLOR.toString(), CHANGE_BACKGROUND_COLOR_TT.toString(), false);
-        app.getGUI().initChildButton(editToolbar, CHANGE_BORDER_COLOR.toString(), CHANGE_BORDER_COLOR_TT.toString(), false);
-        app.getGUI().initChildButton(editToolbar, RANDOMIZE_MAP_COLORS.toString(), RANDOMIZE_MAP_COLORS_TT.toString(), false);
-        app.getGUI().initChildButton(editToolbar, CHANGE_MAP_DIMENSIONS.toString(), CHANGE_MAP_DIMENSIONS_TT.toString(), false);
-        app.getGUI().initChildButton(editToolbar, PLAY_ANTHEM.toString(), PLAY_ANTHEM_TT.toString(), false);
+        renameMapButton = app.getGUI().initChildButton(editToolbar, RENAME_MAP.toString(), RENAME_MAP_TT.toString(), false);
+        addImageButton = app.getGUI().initChildButton(editToolbar, ADD_IMAGE.toString(), ADD_IMAGE_TT.toString(), false);
+        removeImageButton = app.getGUI().initChildButton(editToolbar, REMOVE.toString(), REMOVE_TT.toString(), false);
+        changeBackgroundColorButton = app.getGUI().initChildButton(editToolbar, CHANGE_BACKGROUND_COLOR.toString(), CHANGE_BACKGROUND_COLOR_TT.toString(), false);
+        changeBorderColorButton = app.getGUI().initChildButton(editToolbar, CHANGE_BORDER_COLOR.toString(), CHANGE_BORDER_COLOR_TT.toString(), false);
+        randomizeMapColorsButton = app.getGUI().initChildButton(editToolbar, RANDOMIZE_MAP_COLORS.toString(), RANDOMIZE_MAP_COLORS_TT.toString(), false);
+        changeMapDimensionsButton = app.getGUI().initChildButton(editToolbar, CHANGE_MAP_DIMENSIONS.toString(), CHANGE_MAP_DIMENSIONS_TT.toString(), false);
+        playAnthemButton = app.getGUI().initChildButton(editToolbar, PLAY_ANTHEM.toString(), PLAY_ANTHEM_TT.toString(), false);
+        pauseAnthemButton = app.getGUI().initChildButton(editToolbar, PAUSE_ANTHEM.toString(), PAUSE_ANTHEM_TT.toString(), false);
         //ADDING SLIDERS and their labels
         Slider borderThickness = new Slider();
         Slider zoom = new Slider();
@@ -104,16 +123,19 @@ public class Workspace extends AppWorkspaceComponent {
         fp.getChildren().addAll(editToolbar);
         
         //set up the split pane
-        initTable(); //also adds the table to the split pane
+        initTableAndImage(); //also adds the table to the split pane
         
         //add the split pane to the workspace
-        workspace.getChildren().addAll(splitPane);
+        //splitPane.setStyle("-fx-background-color: blue;");
+        //workspace.getChildren().addAll(splitPane);
+        //workspace.setStyle("-fx-background-color: lightblue;");
         
     }
     
-    public void initTable() {
+    public void initTableAndImage() {
         //be able to get the properties
         PropertiesManager props = PropertiesManager.getPropertiesManager();
+        
         
         
         // NOW SETUP THE TABLE COLUMNS
@@ -123,27 +145,54 @@ public class Workspace extends AppWorkspaceComponent {
         subregionNameColumn = new TableColumn(props.getProperty(PropertyType.SUBREGIONNAME_COLUMN_HEADING));
         capitalNameColumn = new TableColumn(props.getProperty(PropertyType.CAPITAL_COLUMN_HEADING));
         leaderNameColumn = new TableColumn(props.getProperty(PropertyType.LEADER_COLUMN_HEADING));
-        System.out.println("are we ok");
-        System.out.println(props.getProperty(PropertyType.CAPITAL_COLUMN_HEADING));
         
+        
+        subregionsTable = new TableView();
         // AND LINK THE COLUMNS TO THE DATA - figure out how to do this later with the PropertyValueFactory
-        //subregionNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("Subregion Name"));
-        //capitalNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("Capital"));
-        //leaderNameColumn.setCellValueFactory(new PropertyValueFactory<LocalDate, String>("Leader"));
+        subregionNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("subregionName"));
+        capitalNameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("capitalName"));
+        leaderNameColumn.setCellValueFactory(new PropertyValueFactory<LocalDate, String>("leaderName"));
         subregionsTable.getColumns().add(subregionNameColumn);
         subregionsTable.getColumns().add(capitalNameColumn);
         subregionsTable.getColumns().add(leaderNameColumn);
-        System.out.println("are we ok");
+        //PropertyValueFactory<String, String> xd = new PropertyValueFactory<String, String>("subregionName");
         
-        //DataManager dataManager = (DataManager)app.getDataComponent();
-        //subregionsTable.setItems(dataManager.getSubregions());
+        DataManager dataManager = (DataManager)app.getDataComponent();
+        SubRegion x = new SubRegion("New York", "Albany", "Andrew Cuomo");
+        //ObservableList<SubRegion> subregions = new ObservableList<SubRegion>();
+        //note that the above comment was a result of forgetting to instantiate the subregions list in the datamanager
+        dataManager.getSubregions().add(x);
+        SubRegion nj = new SubRegion("New Jersey", "Trenton", "Chris Christie");
+        dataManager.getSubregions().add(nj);
+        
+        System.out.println(x.getCapitalName());
+        subregionsTable.setItems(dataManager.getSubregions());
         
         //splitPane.getItems().addAll(subregionsTable);
+        //splitPane.setDividerPosition(10, 300);
+        
+        //set up the fake image and add it to the mappane so that it shows up on the left and roughly centered
+        String imagePath = FILE_PROTOCOL + PATH_IMAGES + "FakeMapImage.png";
+        Image fakeMapImage = new Image(imagePath);
+        ImageView mapIm = new ImageView(fakeMapImage);
+        mapIm.relocate(15,100);
+        mapPane.getChildren().add(mapIm);
+        
+        //add to splitpane
+        splitPane.getItems().add(mapPane);
+        splitPane.getItems().add(subregionsTable);
         
     }
     
     
     public MapController getMapController() {return mapController;}
+    
+    public void processHW4Events() {
+        changeMapDimensionsButton.setOnAction(e -> {
+            //pop up a dimensions dialog
+        });
+        
+    }
     
     public void processEvents() {
 
@@ -156,7 +205,7 @@ public class Workspace extends AppWorkspaceComponent {
             }
             
             if (e.getButton() == MouseButton.SECONDARY) {
-                mapController.processZoomOut(x, y, renderPane, xOrigin, yOrigin);
+                mapController.processMapDimensions();
             }
         });
         //checks if g has been pressed and then toggles the lines by switching the value of hasLines

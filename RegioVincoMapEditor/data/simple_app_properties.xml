@@ -19,7 +19,29 @@
         <property name="SAVE_ICON"	    value="Save.png"></property>
         <property name="EXIT_ICON"          value="Exit.png"></property>
 	<property name="EXPORT_ICON"        value="Export.png"></property>
-        
+
+	<!-- EDIT TOOLBAR BUTTONS -->
+        <property name="RENAME_MAP"	  		  value="Rename.png"></property>
+        <property name="ADD_IMAGE"	   		 value="Add.png"></property>
+        <property name="REMOVE" 			value="Remove.png"></property>
+        <property name="CHANGE_BACKGROUND_COLOR"          value="Background.png"></property>
+	<property name="CHANGE_BORDER_COLOR"        	value="Border.png"></property>
+	<property name="RANDOMIZE_MAP_COLORS"	    	value="Random.png"></property>
+        <property name="CHANGE_MAP_DIMENSIONS"	 	   value="Resize.png"></property>
+        <property name="PLAY_ANTHEM"	    		value="Play.png"></property>
+	<property name="PAUSE_ANTHEM"	    		value="Pause.png"></property>
+	
+	<!-- EDIT TOOLBAR BUTTONS TOOLTIPS -->
+        <property name="RENAME_MAP_TT"	  		  value="Rename Map"></property>
+        <property name="ADD_IMAGE_TT"	   		 value="Add Image"></property>
+        <property name="REMOVE_TT" 			value="Remove Image"></property>
+        <property name="CHANGE_BACKGROUND_COLOR_TT"          value="Change Background Color"></property>
+	<property name="CHANGE_BORDER_COLOR_TT"        	value="Change Border Color"></property>
+	<property name="RANDOMIZE_MAP_COLORS_TT"	    	value="Randomize Map Colors"></property>
+        <property name="CHANGE_MAP_DIMENSIONS_TT"	 	   value="Change Map Dimensions"></property>
+        <property name="PLAY_ANTHEM_TT"	    		value="Play Region Anthem"></property>
+	<property name="PAUSE_ANTHEM_TT"	    		value="Pause Region Anthem"></property>
+	
         <!-- TOOLTIPS FOR BUTTONS -->
         <property name="NEW_TOOLTIP"		value="Create New Map"></property>
         <property name="LOAD_TOOLTIP"		value="Load a Map"></property>

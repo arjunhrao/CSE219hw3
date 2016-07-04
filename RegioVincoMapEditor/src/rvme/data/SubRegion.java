@@ -20,11 +20,17 @@ public class SubRegion {
     public static final LocalDate DEFAULT_DATE = LocalDate.now();
     public static final boolean DEFAULT_COMPLETED = false;
     
-    final StringProperty category;
-    final StringProperty description;
-    final ObjectProperty<LocalDate> startDate;
-    final ObjectProperty<LocalDate> endDate;
-    final BooleanProperty completed;
+    //final StringProperty category;
+    //final StringProperty description;
+    //final ObjectProperty<LocalDate> startDate;
+    //final ObjectProperty<LocalDate> endDate;
+    //final BooleanProperty completed;
+    
+    //hw4
+    String capitalName = "";
+    String leaderName = "";
+    String subregionName = "";
+    
        
     public SubRegion() {
         //category = new SimpleStringProperty("asdf");
@@ -34,87 +40,47 @@ public class SubRegion {
         //completed = new SimpleBooleanProperty(false);
         
 
-        category = new SimpleStringProperty(DEFAULT_CATEGORY);
-        description = new SimpleStringProperty(DEFAULT_DESCRIPTION);
-        startDate = new SimpleObjectProperty(DEFAULT_DATE);
-        endDate = new SimpleObjectProperty(DEFAULT_DATE);
-        completed = new SimpleBooleanProperty(DEFAULT_COMPLETED);
+        //category = new SimpleStringProperty(DEFAULT_CATEGORY);
+        //description = new SimpleStringProperty(DEFAULT_DESCRIPTION);
+        //startDate = new SimpleObjectProperty(DEFAULT_DATE);
+        //endDate = new SimpleObjectProperty(DEFAULT_DATE);
+        //completed = new SimpleBooleanProperty(DEFAULT_COMPLETED);
     }
 
-    public SubRegion(String initCategory, String initDescription, LocalDate initStartDate, LocalDate initEndDate, boolean initCompleted) {
+    public SubRegion(String initSubregionName, String initCapital, String initLeader) {
         this();
-        category.set(initCategory);
-        description.set(initDescription);
-        startDate.set(initStartDate);
-        endDate.set(initEndDate);
-        completed.set(initCompleted);
+        subregionName = initSubregionName;
+        capitalName = initCapital;
+        leaderName = initLeader;
     }
 
-    public String getCategory() {
-        return category.get();
+    public String getSubregionName() {
+        return subregionName;
     }
 
-    public void setCategory(String value) {
-        category.set(value);
-    }
-
-    public StringProperty categoryProperty() {
-        return category;
-    }
-
-    public String getDescription() {
-        return description.get();
-    }
-
-    public void setDescription(String value) {
-        description.set(value);
-    }
-
-    public StringProperty descriptionProperty() {
-        return description;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate.get();
-    }
-
-    public void setStartDate(LocalDate value) {
-        startDate.set(value);
-    }
-
-    public ObjectProperty startDateProperty() {
-        return startDate;
+    public void setSubregionName(String value) {
+        subregionName = value;
     }
     
-    public LocalDate getEndDate() {
-        return endDate.get();
+    public String getLeaderName() {
+        return leaderName;
+    }
+
+    public void setLeaderName(String value) {
+        leaderName = value;
     }
     
-    public void setEndDate(LocalDate value) {
-        endDate.set(value);
-    }
-    
-    public ObjectProperty endDateProperty() {
-        return endDate;
+    public String getCapitalName() {
+        return capitalName;
     }
 
-    public boolean getCompleted() {
-        return completed.get();
-    }
-
-    public void setCompleted(boolean value) {
-        completed.set(value);
-    }
-
-    public BooleanProperty completedProperty() {
-        return completed;
+    public void setCapitalName(String value) {
+        capitalName = value;
     }
     
     public void reset() {
-        setCategory(DEFAULT_CATEGORY);
-        setDescription(DEFAULT_DESCRIPTION);
-        setStartDate(DEFAULT_DATE);
-        setEndDate(DEFAULT_DATE);
-        setCompleted(DEFAULT_COMPLETED);
+        setCapitalName(DEFAULT_CATEGORY);
+        setLeaderName(DEFAULT_DESCRIPTION);
+        setSubregionName(DEFAULT_CATEGORY);
     }
 }
