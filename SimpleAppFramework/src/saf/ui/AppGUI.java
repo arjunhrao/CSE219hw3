@@ -307,7 +307,8 @@ public class AppGUI implements AppStyleArbiter {
         exportButton.getStyleClass().add(CLASS_FILE_BUTTON);
     }
 
-    public Object getFileController() {
+    public AppFileController getFileController() {
         return fileController;
     }
+    public Button getNewButton() { return newButton; }
 }

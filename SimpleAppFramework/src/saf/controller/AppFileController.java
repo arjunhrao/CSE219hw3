@@ -109,7 +109,10 @@ public class AppFileController {
                 // THE APPROPRIATE CONTROLS
                 app.getGUI().updateToolbarControls(saved);
 		app.getWorkspaceComponent().reloadWorkspace();
-
+                
+                //hw4
+                app.getWorkspaceComponent().newDialog();
+                
                 // TELL THE USER NEW WORK IS UNDERWAY
 		dialog.show(props.getProperty(NEW_COMPLETED_TITLE), props.getProperty(NEW_COMPLETED_MESSAGE));
             }
@@ -344,4 +347,9 @@ public class AppFileController {
     public boolean isSaved() {
         return saved;
     }
+    
+    public void setSaved(boolean x) {
+        saved = x;
+    }
+    
 }

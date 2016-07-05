@@ -71,4 +71,6 @@ public abstract class AppWorkspaceComponent implements AppStyleArbiter {
      *
      */
         public abstract void reloadWorkspace();
+        
+        public abstract void newDialog();
 }
