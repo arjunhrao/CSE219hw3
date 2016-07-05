@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventType;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
@@ -105,12 +106,26 @@ public class Workspace extends AppWorkspaceComponent {
         renameMapButton = app.getGUI().initChildButton(editToolbar, RENAME_MAP.toString(), RENAME_MAP_TT.toString(), false);
         addImageButton = app.getGUI().initChildButton(editToolbar, ADD_IMAGE.toString(), ADD_IMAGE_TT.toString(), false);
         removeImageButton = app.getGUI().initChildButton(editToolbar, REMOVE.toString(), REMOVE_TT.toString(), false);
-        changeBackgroundColorButton = app.getGUI().initChildButton(editToolbar, CHANGE_BACKGROUND_COLOR.toString(), CHANGE_BACKGROUND_COLOR_TT.toString(), false);
-        changeBorderColorButton = app.getGUI().initChildButton(editToolbar, CHANGE_BORDER_COLOR.toString(), CHANGE_BORDER_COLOR_TT.toString(), false);
+        //changeBackgroundColorButton = app.getGUI().initChildButton(editToolbar, CHANGE_BACKGROUND_COLOR.toString(), CHANGE_BACKGROUND_COLOR_TT.toString(), false);
+        //changeBorderColorButton = app.getGUI().initChildButton(editToolbar, CHANGE_BORDER_COLOR.toString(), CHANGE_BORDER_COLOR_TT.toString(), false);
+        //Turns out the above are supposed to be color pickers.
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        ColorPicker changeBackgroundColorPicker = new ColorPicker();
+        ColorPicker changeBorderColorPicker = new ColorPicker();
+        Label bgColorLabel = new Label(props.getProperty(CHANGE_BACKGROUND_COLOR_TT) + ": ");
+        Label borderColorLabel = new Label(props.getProperty(CHANGE_BORDER_COLOR_TT) + ": ");
+        HBox colorPickingToolbar = new HBox();
+        colorPickingToolbar.getChildren().addAll(bgColorLabel, changeBackgroundColorPicker, borderColorLabel, changeBorderColorPicker);
+        
         randomizeMapColorsButton = app.getGUI().initChildButton(editToolbar, RANDOMIZE_MAP_COLORS.toString(), RANDOMIZE_MAP_COLORS_TT.toString(), false);
         changeMapDimensionsButton = app.getGUI().initChildButton(editToolbar, CHANGE_MAP_DIMENSIONS.toString(), CHANGE_MAP_DIMENSIONS_TT.toString(), false);
         playAnthemButton = app.getGUI().initChildButton(editToolbar, PLAY_ANTHEM.toString(), PLAY_ANTHEM_TT.toString(), false);
         pauseAnthemButton = app.getGUI().initChildButton(editToolbar, PAUSE_ANTHEM.toString(), PAUSE_ANTHEM_TT.toString(), false);
+        //add the colorpicking stuff after all of the buttons but before the sliders
+        editToolbar.getChildren().add(colorPickingToolbar);
+        editToolbar.setHgap(1.0);
+        editToolbar.setVgap(5.0);
+
         //ADDING SLIDERS and their labels
         Slider borderThickness = new Slider();
         Slider zoom = new Slider();
@@ -120,7 +135,9 @@ public class Workspace extends AppWorkspaceComponent {
         sliders.getChildren().addAll(borderThicknessLabel, borderThickness, zoomLabel, zoom);
         editToolbar.getChildren().addAll(sliders);
         //now add the toolbar to the flowpane. SUCCESS! Although we might want to consider spacing and button size...
+        
         fp.getChildren().addAll(editToolbar);
+        editToolbar.setMinWidth(800.0);
         
         //set up the split pane
         initTableAndImage(); //also adds the table to the split pane
@@ -248,6 +265,7 @@ public class Workspace extends AppWorkspaceComponent {
     @Override
     public void newDialog() {
         mapController.processNewMapDialog();
+        
     }
     
     @Override
@@ -291,11 +309,11 @@ public class Workspace extends AppWorkspaceComponent {
         //workspace.setClip(clip);
         
         //hw4
-        workspace.getChildren().clear();
+        //workspace.getChildren().clear();
         //splitPane.getItems().clear();
-        editToolbar.getChildren().clear();
-        initHW4Layout();
-        
+        //editToolbar.getChildren().clear();
+        //initHW4Layout();
+        app.getGUI().getAppPane().setCenter(splitPane);
         
         
     }
