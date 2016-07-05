@@ -26,6 +26,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Scale;
 import static javafx.scene.transform.Transform.scale;
+import javafx.stage.FileChooser;
 import properties_manager.PropertiesManager;
 import static rvme.PropertyType.*;
 import saf.AppTemplate;
@@ -452,7 +453,7 @@ public class MapController {
         
         //adds ok and cancel buttons
         ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(okButtonType);
+        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
         //above, there previously was an add Cancel button type (you could see exactly if you scroll to dimensions dialog,
         //but having that isn't necessary anymore.
         
@@ -480,6 +481,7 @@ public class MapController {
         Button pdButton = app.getGUI().initChildButton(pd, PARENT_DIRECTORY_BUTTON.toString(), PARENT_DIRECTORY_BUTTON_TT.toString(), false);
         Button dfButton = app.getGUI().initChildButton(df, DATA_FILE_BUTTON.toString(), DATA_FILE_BUTTON_TT.toString(), false);
         
+        //FileChooser fc = new FileChooser();
         
         FlowPane mapNameStuff = new FlowPane();
         mapNameStuff.getChildren().addAll(mapNameLabel, mapName);
