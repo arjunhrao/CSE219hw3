@@ -32,6 +32,8 @@
 	<property name="PAUSE_ANTHEM"	    		value="Pause.png"></property>
         <property name="NEXT_BUTTON"	    		value="Next.png"></property>
 	<property name="PREV_BUTTON"	    		value="Prev.png"></property>	
+	<property name="PARENT_DIRECTORY_BUTTON"	value="ParentDirectory.png"></property>	
+	<property name="DATA_FILE_BUTTON"	    	value="DataFile.png"></property>	
 
 	<!-- EDIT TOOLBAR BUTTONS TOOLTIPS -->
         <property name="RENAME_MAP_TT"	  		  value="Rename Map"></property>
@@ -45,6 +47,9 @@
 	<property name="PAUSE_ANTHEM_TT"	    		value="Pause Region Anthem"></property>
         <property name="NEXT_BUTTON_TT"	    		value="Go To Next Subregion"></property>
         <property name="PREV_BUTTON_TT"	    		value="Go To Previous Subregion"></property>
+        <property name="PREV_BUTTON_TT"	    		value="Go To Previous Subregion"></property>
+        <property name="PARENT_DIRECTORY_BUTTON_TT"	value="Select a Parent Directory"></property>
+        <property name="DATA_FILE_BUTTON_TT"		value="Select a Data File"></property>
 	
         <!-- TOOLTIPS FOR BUTTONS -->
         <property name="NEW_TOOLTIP"		value="Create New Map"></property>

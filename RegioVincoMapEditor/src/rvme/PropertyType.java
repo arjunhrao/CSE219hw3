@@ -20,12 +20,16 @@ public enum PropertyType {
     //dimensions dialog
     DIMENSIONS_HEADING,
     EDIT_SUBREGION_HEADING,
-    NEW_DIALOG_HEADING,
+    NEW_MAP_HEADING,
     WIDTH_PROMPT_LABEL,
     HEIGHT_PROMPT_LABEL,
     //edit subregion dialog
     SUBREGION_NAME_PROMPT_LABEL,
     CAPITAL_PROMPT_LABEL,
-    LEADER_PROMPT_LABEL
+    LEADER_PROMPT_LABEL,
+    //new map dialog
+    MAP_NAME_PROMPT_LABEL,
+    PARENT_DIRECTORY_LABEL,
+    DATA_FILE_LABEL
     
 }

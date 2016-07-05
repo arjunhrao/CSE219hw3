@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
@@ -447,7 +448,7 @@ public class MapController {
         
         //creates the dialog
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle(props.getProperty(DIMENSIONS_HEADING));
+        dialog.setTitle(props.getProperty(NEW_MAP_HEADING));
         
         //adds ok and cancel buttons
         ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
@@ -461,63 +462,30 @@ public class MapController {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20, 150, 10, 10));
         
-        TextField subregionName = new TextField();
-        TextField leader = new TextField();
-        TextField capital = new TextField();
+        TextField mapName = new TextField();
+        TextField parentDirectory = new TextField();
+        TextField dataFile = new TextField();
 
-        Label nameLabel = new Label(props.getProperty(SUBREGION_NAME_PROMPT_LABEL));
-        Label leaderLabel = new Label(props.getProperty(LEADER_PROMPT_LABEL));
-        Label capitalLabel = new Label(props.getProperty(CAPITAL_PROMPT_LABEL));
-        addSheetsToLabel(nameLabel, "subregion_name_prompt_label");
-        addSheetsToLabel(leaderLabel, "leader_prompt_label");
-        addSheetsToLabel(capitalLabel, "capital_prompt_label");
+        //creating labels and buttons and formatting them
+        Label mapNameLabel = new Label(props.getProperty(MAP_NAME_PROMPT_LABEL));
+        Label parentDirectoryLabel = new Label(props.getProperty(PARENT_DIRECTORY_LABEL));
+        Label dataFileLabel = new Label(props.getProperty(DATA_FILE_LABEL));
+        addSheetsToLabel(mapNameLabel, "subregion_name_prompt_label");
+        addSheetsToLabel(parentDirectoryLabel, "leader_prompt_label");
+        addSheetsToLabel(dataFileLabel, "capital_prompt_label");
+        FlowPane pd = new FlowPane();
+        FlowPane df = new FlowPane();
+        pd.getChildren().addAll(parentDirectoryLabel, parentDirectory);
+        df.getChildren().addAll(dataFileLabel, dataFile);
+        Button pdButton = app.getGUI().initChildButton(pd, PARENT_DIRECTORY_BUTTON.toString(), PARENT_DIRECTORY_BUTTON_TT.toString(), false);
+        Button dfButton = app.getGUI().initChildButton(df, DATA_FILE_BUTTON.toString(), DATA_FILE_BUTTON_TT.toString(), false);
         
-        //set the data's fields to the text fields
-        subregionName.setText(it.getSubregionName());
-        leader.setText(it.getLeaderName());
-        capital.setText(it.getCapitalName());
         
-        SubRegion mySubRegion = new SubRegion();
-        
-        gridPane.add(nameLabel, 0, 0);
-        gridPane.add(subregionName, 1, 0);
-        gridPane.add(leaderLabel, 0, 1);
-        gridPane.add(leader, 1, 1);
-        gridPane.add(capitalLabel, 0, 2);
-        gridPane.add(capital, 1, 2);
-        
-        //note: I got lazy here and stopped doing xml bc I may as well finish first
-        VBox flagImageBox = new VBox();
-        Label flagImageLabel = new Label("Flag Image:");
-        //create the flag image
-        String imagePath = FILE_PROTOCOL + PATH_IMAGES + "FlagImage.png";
-        Image flagImage = new Image(imagePath);
-        ImageView flagIm = new ImageView(flagImage);
-        //mapIm.relocate(15,100);
-        
-        flagImageBox.getChildren().addAll(flagImageLabel, flagIm);
-        gridPane.add(flagImageBox, 0, 3);
-        
-        //now for the leaderbox
-        VBox leaderImageBox = new VBox();
-        Label leaderImageLabel = new Label("Leader Image:");
-        //create the leader image
-        String imagePath2 = FILE_PROTOCOL + PATH_IMAGES + "LeaderImage.png";
-        Image leaderImage = new Image(imagePath2);
-        ImageView leaderIm = new ImageView(leaderImage);
-        //mapIm.relocate(15,100);
-        
-        leaderImageBox.getChildren().addAll(leaderImageLabel, leaderIm);
-        gridPane.add(leaderImageBox, 1, 3);
-        
-        //make and add prev and next buttons - NOTE: these buttons should be made outside later,
-        //need to be able to access them. Also, maybe make a separate class for the subregion dialog.
-        FlowPane nextPrevPane = new FlowPane();
-        Button prevButton = app.getGUI().initChildButton(nextPrevPane, PREV_BUTTON.toString(), PREV_BUTTON_TT.toString(), false);
-        Button nextButton = app.getGUI().initChildButton(nextPrevPane, NEXT_BUTTON.toString(), NEXT_BUTTON_TT.toString(), false);
-
-        //nextPrevPane.getChildren().add(new Label("asdf"));
-        gridPane.add(nextPrevPane, 0, 4);
+        FlowPane mapNameStuff = new FlowPane();
+        mapNameStuff.getChildren().addAll(mapNameLabel, mapName);
+        gridPane.add(mapNameStuff, 0, 0);
+        gridPane.add(pd, 0, 1);
+        gridPane.add(df, 0, 2);
         
         dialog.getDialogPane().setContent(gridPane);
         Optional<ButtonType> result = dialog.showAndWait();
